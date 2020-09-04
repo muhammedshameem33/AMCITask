@@ -5,6 +5,7 @@ import {MatToolbarModule, MatToolbar} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator'
 import { from } from 'rxjs';
 
 const MaterialComponents=[
@@ -13,7 +14,8 @@ const MaterialComponents=[
   MatToolbarModule,
   MatIconModule,
   MatSnackBarModule,
-  MatTableModule
+  MatTableModule,
+  MatPaginatorModule
 ]
 
 @NgModule({
