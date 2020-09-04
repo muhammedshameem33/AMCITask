@@ -24,7 +24,6 @@ export class PostsComponent implements OnInit {
     this.spinner.show();
     this.http.get('posts').subscribe(
       res => {
-        console.log(res);
         this.spinner.hide();
         this.openSnackBar("Successfully get all posts","Dismiss");
       },
