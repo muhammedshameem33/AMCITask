@@ -18,6 +18,7 @@ export class PostsComponent implements OnInit {
 
 
   private getAllPosts() {
+    debugger
     this.spinner.show();
     this.http.get('posts').subscribe(
       res => {
