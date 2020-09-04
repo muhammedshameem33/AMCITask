@@ -13,9 +13,16 @@ export class HttpService {
     return this.http.get(environment.baseUrl+url);
   }
 
+  public post(url:string,data){
+    return this.http.post(environment.baseUrl+url,data);
+  }
+  
+  public delete(url:string){
+    return this.http.delete(environment.baseUrl+url);
+  }
   public put(url:string,data){
     return this.http.put(environment.baseUrl+url,data);
   }
 
-  
+
 }
