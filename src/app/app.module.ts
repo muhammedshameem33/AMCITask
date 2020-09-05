@@ -11,12 +11,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpService } from './service/http.service';
 import { PostsComponent } from './components/posts/posts.component';
 import { DataShareService } from './service/data-share.service';
+import { EditPostComponentComponent } from './components/edit-post-component/edit-post-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    PostsComponent
+    PostsComponent,
+    EditPostComponentComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +28,7 @@ import { DataShareService } from './service/data-share.service';
     HttpClientModule,
     BrowserAnimationsModule
   ],
+  entryComponents:[EditPostComponentComponent],
   providers: [HttpService,
   DataShareService],
   bootstrap: [AppComponent]

@@ -29,7 +29,7 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell  *matHeaderCellDef ></th>
         <td mat-cell *matCellDef="let element" >
-             <button mat-button >Edit</button>
+             <button mat-button (click)=" openEditDialogue(element)" >Edit</button>
         </td>
       </ng-container>
 

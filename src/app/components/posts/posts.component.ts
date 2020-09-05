@@ -5,8 +5,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
-import { Post } from 'src/app/Models/post';
+import { MatDialog } from '@angular/material/dialog';
 import { DataShareService } from 'src/app/service/data-share.service';
+import { EditPostComponentComponent } from 'src/app/components/edit-post-component/edit-post-component.component'
 
 @Component({
   selector: 'app-posts',
@@ -20,10 +21,12 @@ export class PostsComponent implements OnInit{
 dataSource:MatTableDataSource<any>;
 
 displayedColumns:string[]=['id','userId','title','body','actions','delete']
+  dialogeValue: any;
   constructor(private http:HttpService,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
-    private dataService:DataShareService) { }
+    private dataService:DataShareService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getAllPosts();
@@ -79,6 +82,19 @@ displayedColumns:string[]=['id','userId','title','body','actions','delete']
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 3000,
+    });
+  }
+
+  openEditDialogue(post) {
+    const dialogRef = this.dialog.open(EditPostComponentComponent, {
+      width: '50%',
+      height: 'auto',
+      data: { pageValue: post }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.dialogeValue = result;
+      console.log('The dialog was closed', result);
     });
   }
 }
