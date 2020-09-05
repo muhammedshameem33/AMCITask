@@ -10,6 +10,7 @@ import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpService } from './service/http.service';
 import { PostsComponent } from './components/posts/posts.component';
+import { DataShareService } from './service/data-share.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { PostsComponent } from './components/posts/posts.component';
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [HttpService],
+  providers: [HttpService,
+  DataShareService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

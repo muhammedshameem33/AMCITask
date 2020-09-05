@@ -6,6 +6,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import { Post } from 'src/app/Models/post';
+import { DataShareService } from 'src/app/service/data-share.service';
 
 @Component({
   selector: 'app-posts',
@@ -15,17 +16,21 @@ import { Post } from 'src/app/Models/post';
 export class PostsComponent implements OnInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @Input() searchText:string="";
+  searchText:string="";
 dataSource:MatTableDataSource<any>;
 
 displayedColumns:string[]=['id','userId','title','body','actions','delete']
   constructor(private http:HttpService,
     private spinner: NgxSpinnerService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private dataService:DataShareService) { }
 
   ngOnInit(): void {
     this.getAllPosts();
-    this.applyFilter();
+    this.dataService.shareSearchText.subscribe(x=>{
+      this.searchText=x;
+      this.applyFilter()
+    });
   }
 
   private getAllPosts() {
@@ -46,13 +51,15 @@ displayedColumns:string[]=['id','userId','title','body','actions','delete']
   }
 
   applyFilter() {
-    debugger
+    
     const filterValue = this.searchText;
+    if (!!filterValue) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
   }
 
   Delete(id){
