@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpService } from 'src/app/service/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
 import { Post } from 'src/app/Models/post';
 
 @Component({
@@ -13,7 +14,10 @@ import { Post } from 'src/app/Models/post';
 })
 export class PostsComponent implements OnInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @Input() searchText:string="";
 dataSource:MatTableDataSource<any>;
+
 displayedColumns:string[]=['id','userId','title','body','actions','delete']
   constructor(private http:HttpService,
     private spinner: NgxSpinnerService,
@@ -21,7 +25,7 @@ displayedColumns:string[]=['id','userId','title','body','actions','delete']
 
   ngOnInit(): void {
     this.getAllPosts();
-    
+    this.applyFilter();
   }
 
   private getAllPosts() {
@@ -30,6 +34,7 @@ displayedColumns:string[]=['id','userId','title','body','actions','delete']
       res => {
         this.dataSource=new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.spinner.hide();
         this.openSnackBar("Successfully get all posts","Dismiss");
       },
@@ -38,6 +43,16 @@ displayedColumns:string[]=['id','userId','title','body','actions','delete']
         this.openSnackBar("Failed During fetching","Dismiss");
       }
     );
+  }
+
+  applyFilter() {
+    debugger
+    const filterValue = this.searchText;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   Delete(id){

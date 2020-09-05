@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  searchText: string="";
 
   constructor(
     changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private snackBar: MatSnackBar, private router: Router) {
@@ -27,5 +28,6 @@ export class DashboardComponent implements OnInit {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   onSearchChange(searchValue: string): void {
+    this.searchText=searchValue;
   }
 }
